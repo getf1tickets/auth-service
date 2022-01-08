@@ -11,6 +11,7 @@ declare module 'fastify' {
 
 export default fp(async (fastify) => {
   await registerExtraModels(models as any, fastify, fastify.sequelize);
+  await fastify.sequelize.sync();
 }, {
   name: 'sdk-extra-model',
   dependencies: ['sdk-registration', 'sdk-sequelize'],

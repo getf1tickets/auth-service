@@ -93,3 +93,4 @@ dist
 # yalc
 .yalc/
 yalc.lock
+.env

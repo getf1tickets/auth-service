@@ -1,6 +1,7 @@
 import {
   DataTypes, Model, Optional, Sequelize,
 } from 'sequelize';
+import { OAuth2Client } from '@/models/oauth2';
 
 export enum OAuth2ClientGrants {
   AUTHORIZATION_CODE = 'authorization_code',
@@ -27,6 +28,8 @@ export class OAuth2ClientGrant
 
   declare readonly updatedAt: Date;
 
+  declare readonly deletedAt: Date;
+
   static fn(sequelize: Sequelize) {
     OAuth2ClientGrant.init(
       {
@@ -44,8 +47,17 @@ export class OAuth2ClientGrant
         sequelize,
         tableName: 'f1tickets_oauth2_client_grant',
         freezeTableName: true,
+        paranoid: true,
       },
     );
+  }
+
+  static associate() {
+    OAuth2Client.hasMany(OAuth2ClientGrant, {
+      sourceKey: 'id',
+      foreignKey: 'clientId',
+      as: 'grants',
+    });
   }
 }
 

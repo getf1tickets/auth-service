@@ -33,6 +33,8 @@ export class OAuth2Client extends Model<OAuth2ClientAttributes, OAuth2ClientCrea
 
   declare readonly updatedAt: Date;
 
+  declare readonly deletedAt: Date;
+
   // association attributes
   declare getGrants: HasManyGetAssociationsMixin<OAuth2ClientGrant>;
 
@@ -65,29 +67,16 @@ export class OAuth2Client extends Model<OAuth2ClientAttributes, OAuth2ClientCrea
         sequelize,
         tableName: 'f1tickets_oauth2_client',
         freezeTableName: true,
+        paranoid: true,
       },
     );
-  }
-
-  static associate() {
-    OAuth2Client.hasMany(OAuth2ClientGrant, {
-      sourceKey: 'id',
-      foreignKey: 'clientId',
-      as: 'grants',
-    });
-
-    OAuth2Client.hasMany(OAuth2ClientRedirectUri, {
-      sourceKey: 'id',
-      foreignKey: 'clientId',
-      as: 'redirectUris',
-    });
   }
 }
 
 export * from '@/models/oauth2/client/grant';
 export * from '@/models/oauth2/client/redirect';
-export default {
+export default [
   OAuth2Client,
   OAuth2ClientGrant,
   OAuth2ClientRedirectUri,
-};
+];
