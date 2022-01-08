@@ -6,7 +6,8 @@
   "scripts": {
     "start": "fastify start -l info dist/app.js",
     "build": "tsc",
-    "dev": "tsc && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"tsc -w\" \"fastify start --ignore-watch=.ts$ -w -l trace -P dist/app.js\""
+    "dev": "yarn run local:install-sdk && tsc && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"tsc -w\" \"fastify start --ignore-watch=.ts$ -w -l trace -P dist/app.js\"",
+    "local:install-sdk": "yalc add @getf1tickets/sdk@1.0.0"
   },
   "dependencies": {
     "@getf1tickets/sdk": "file:.yalc/@getf1tickets/sdk",
@@ -26,7 +27,14 @@
     "fastify-tsconfig": "^1.0.1",
     "tap": "^15.0.9",
     "ts-node": "^10.0.0",
-    "typescript": "^4.2.4"
+    "typescript": "^4.2.4",
+    "yalc": "^1.0.0-pre.53",
+    "eslint": "^8.6.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^16.1.0",
+    "eslint-plugin-import": "^2.25.4",
+    "@typescript-eslint/eslint-plugin": "^5.9.0",
+    "@typescript-eslint/parser": "^5.9.0"
   },
   "repository": {
     "type": "git",
