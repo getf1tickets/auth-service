@@ -25,7 +25,7 @@ coverage
 # nyc test coverage
 .nyc_output
 
-# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
+# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
 # Bower dependency directory (https://bower.io/)
@@ -34,7 +34,7 @@ bower_components
 # node-waf configuration
 .lock-wscript
 
-# Compiled binary addons (https://nodejs.org/api/addons.html)
+# Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
 # Dependency directories
@@ -62,43 +62,34 @@ typings/
 # Optional REPL history
 .node_repl_history
 
-# Output of 'npm pack'
-*.tgz
+# 0x
+profile-*
 
-# Yarn Integrity file
-.yarn-integrity
+# mac files
+.DS_Store
 
-# dotenv environment variables file
-.env
-.env.test
+# vim swap files
+*.swp
 
-# parcel-bundler cache (https://parceljs.org/)
-.cache
+# webstorm
+.idea
 
-# Next.js build output
-.next
+# vscode
+.vscode
+*code-workspace
 
-# Nuxt.js build / generate output
-.nuxt
+# clinic
+profile*
+*clinic*
+*flamegraph*
+
+# generated code
+examples/typescript-server.js
+test/types/index.js
+
+# compiled app
 dist
 
-# Gatsby files
-.cache/
-# Comment in the public line in if your project uses Gatsby and *not* Next.js
-# https://nextjs.org/blog/next-9-1#public-directory-support
-# public
-
-# vuepress build output
-.vuepress/dist
-
-# Serverless directories
-.serverless/
-
-# FuseBox cache
-.fusebox/
-
-# DynamoDB Local files
-.dynamodb/
-
-# TernJS port file
-.tern-port
+# yalc
+.yalc/
+yalc.lock
