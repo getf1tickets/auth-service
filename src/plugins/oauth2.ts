@@ -1,14 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import fp from 'fastify-plugin';
 import to from 'await-to-js';
-import { User, sha256 } from '@getf1tickets/sdk';
+import { User, UUID, sha256 } from '@getf1tickets/sdk';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { DateTime } from 'luxon';
 import { OAuth2Client } from '@/models/oauth2/client';
 import { OAuth2ClientGrant, OAuth2ClientGrants } from '@/models/oauth2/client/grant';
 import { OAuth2ClientRedirectUri } from '@/models/oauth2/client/redirect';
 import { compareHash } from '@/utils/string';
-import { createAccessToken, createRefreshToken } from '@/utils/token';
+import { createAccessToken, createRefreshToken, decodeToken } from '@/utils/token';
 import { OAuth2Token, OAuth2TokenCreationAttributes } from '@/models/oauth2/token';
 
 declare module 'fastify' {
@@ -19,6 +18,7 @@ declare module 'fastify' {
 
 export interface OAuth2 {
   token: () => (request: FastifyRequest, reply: FastifyReply) => Promise<void>;
+  authorize: () => (request: FastifyRequest, reply: FastifyReply) => Promise<void>;
 }
 
 interface OAuth2TokenParameters {
@@ -127,7 +127,41 @@ export default fp(async (fastify) => {
     };
 
     const [err] = await to<OAuth2Token>(OAuth2Token.create(properties));
-    if (err) throw err;
+    if (err) {
+      fastify.log.error(err);
+      throw fastify.httpErrors.internalServerError();
+    }
+  };
+
+  const validateToken = async (identifier: UUID, accessToken: string): Promise<User> => {
+    fastify.log.debug({ name: 'OAuth2' }, 'validateToken with identifier: %s, accessToken: %s', identifier, accessToken);
+
+    const [err, user] = await to<User | null>(User.findOne({
+      where: {
+        id: identifier,
+      },
+      include: [
+        {
+          model: OAuth2Token,
+          as: 'tokens',
+          attributes: ['id'],
+          where: {
+            hashedAccessToken: sha256(accessToken),
+          },
+        },
+      ],
+    }));
+
+    if (err) {
+      fastify.log.error(err);
+      throw fastify.httpErrors.internalServerError();
+    }
+
+    if (!user) {
+      throw fastify.httpErrors.unauthorized();
+    }
+
+    return user;
   };
 
   const token = () => async (request: FastifyRequest, reply: FastifyReply) => {
@@ -136,7 +170,6 @@ export default fp(async (fastify) => {
       grant_type: grantType,
       email,
       password,
-      scope,
     } = request.body as any;
 
     if (!clientId) {
@@ -155,10 +188,7 @@ export default fp(async (fastify) => {
       throw fastify.httpErrors.badRequest('Missing parameter: password');
     }
 
-    let scopes: string[] = ['*'];
-    if (scope) {
-      scopes = `${scope}`.split(',');
-    }
+    const scopes: string[] = ['*'];
 
     const client = await getClient(clientId);
     if (!client.grants?.find((grant) => grant.type === grantType)) {
@@ -183,8 +213,43 @@ export default fp(async (fastify) => {
     }
   };
 
+  const authorize = () => async (request: FastifyRequest, reply: FastifyReply) => {
+    const {
+      authorization,
+    } = request.headers;
+
+    if (!authorization) {
+      throw fastify.httpErrors.unauthorized();
+    }
+
+    const authorizationSplit = `${authorization}`.trim().split(' ');
+    if (authorizationSplit.length !== 2) {
+      throw fastify.httpErrors.unauthorized();
+    }
+
+    const bearer = authorizationSplit[1];
+    if (!bearer) {
+      throw fastify.httpErrors.unauthorized();
+    }
+
+    let decoded;
+    try {
+      decoded = await decodeToken(bearer);
+    } catch (err) {
+      throw fastify.httpErrors.unauthorized();
+    }
+
+    const user = await validateToken(decoded.identifier, bearer);
+
+    reply.send({
+      id: user.id,
+      email: user.email,
+    });
+  };
+
   fastify.decorate<OAuth2>('oauth2', {
     token,
+    authorize,
   });
 }, {
   name: 'oauth2',

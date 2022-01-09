@@ -1,8 +1,20 @@
+import { UUID } from '@getf1tickets/sdk';
 import * as jwt from 'jsonwebtoken';
 
 const { JWT_SECRET = 'secret', JWT_ISSUER } = process.env;
 
 export const DEFAULT_ACCESS_TOKEN_EXPIRES = '30 days';
+
+export interface TokenAttributes {
+  identifier: UUID;
+  type: string;
+  requested: UUID;
+  scopes: string[];
+  iat: number;
+  exp: number;
+  iss: string;
+  [key: string]: any;
+}
 
 const createToken = (
   data: any,
@@ -28,3 +40,15 @@ export const createRefreshToken = (
 ): string => createToken({
   identifier, type: 'access', requested, scopes,
 }, { expiresIn: '30days' });
+
+export const decodeToken = (
+  bearer: string,
+): Promise<TokenAttributes> => (new Promise<TokenAttributes>((resolve, reject) => {
+  jwt.verify(bearer, JWT_SECRET, async (err, data) => {
+    if (err || !data || typeof data !== 'object') {
+      reject(new Error(err?.message));
+    } else {
+      resolve(data as any);
+    }
+  });
+}));
