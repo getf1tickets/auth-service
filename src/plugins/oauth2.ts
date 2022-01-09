@@ -81,7 +81,7 @@ export default fp(async (fastify) => {
       throw fastify.httpErrors.internalServerError();
     }
 
-    if (!user || !compareHash(password, user.hashedPassword)) {
+    if (!user || !(await compareHash(password, user.hashedPassword))) {
       throw fastify.httpErrors.badRequest('Invalid user: user is invalid');
     }
 
