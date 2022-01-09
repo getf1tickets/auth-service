@@ -1,10 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es2020",
+    "target": "es2018",
     "module": "commonjs",
     "moduleResolution": "node",
-    "strict": false,
-    "noImplicitUseStrict": true,
+    "sourceMap": true,
+    "declaration": true,
+    "pretty": true,
+    "noEmitOnError": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "removeComments": true,
+    "noFallthroughCasesInSwitch": true,
+    "useDefineForClassFields": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "lib": [
+      "esnext"
+    ],
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {

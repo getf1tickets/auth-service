@@ -1,7 +1,7 @@
 import {
   DataTypes, Model, Optional, Sequelize,
 } from 'sequelize';
-import { enumToArray, User } from '@getf1tickets/sdk';
+import { enumToArray, User, UUID } from '@getf1tickets/sdk';
 import { OAuth2ClientGrants } from '@/models/oauth2/client/grant';
 import { OAuth2Client } from './client';
 
@@ -15,7 +15,10 @@ interface OAuth2TokenAttributes {
   scopes: string[];
 }
 
-interface OAuth2TokenCreationAttributes extends Optional<OAuth2TokenAttributes, 'id' | 'scopes' | 'hashedRefreshToken' | 'refreshTokenExpireAt'> {}
+export interface OAuth2TokenCreationAttributes extends Optional<OAuth2TokenAttributes, 'id'> {
+  clientId: UUID;
+  userId: UUID;
+}
 
 export class OAuth2Token
   extends Model<OAuth2TokenAttributes, OAuth2TokenCreationAttributes>
@@ -39,6 +42,11 @@ export class OAuth2Token
   declare readonly updatedAt: Date;
 
   declare readonly deletedAt: Date;
+
+  // association attributes
+  declare clientId: UUID;
+
+  declare userId: UUID;
 
   static fn(sequelize: Sequelize) {
     OAuth2Token.init(

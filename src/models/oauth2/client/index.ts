@@ -9,7 +9,7 @@ import { UUID } from '@getf1tickets/sdk';
 
 // association dependencies
 import { OAuth2ClientGrant } from '@/models/oauth2/client/grant';
-import { OAuth2ClientRedirectUri } from '@/models/oauth2/client';
+import { OAuth2ClientRedirectUri } from '@/models/oauth2/client/redirect';
 
 interface OAuth2ClientAttributes {
   id: UUID;
@@ -36,12 +36,21 @@ export class OAuth2Client extends Model<OAuth2ClientAttributes, OAuth2ClientCrea
   declare readonly deletedAt: Date;
 
   // association attributes
+  declare readonly grants?: OAuth2ClientGrant[];
+
   declare getGrants: HasManyGetAssociationsMixin<OAuth2ClientGrant>;
 
   declare createGrant: HasManyCreateAssociationMixin<OAuth2ClientGrant>;
 
+  declare readonly redirectUris?: OAuth2ClientRedirectUri[];
+
+  declare getRedirectUris: HasManyGetAssociationsMixin<OAuth2ClientRedirectUri>;
+
+  declare createRedirectUri: HasManyCreateAssociationMixin<OAuth2ClientRedirectUri>;
+
   declare static associations: {
-    projects: Association<OAuth2Client, OAuth2ClientGrant>;
+    grants: Association<OAuth2Client, OAuth2ClientGrant>;
+    redirectUris: Association<OAuth2Client, OAuth2ClientRedirectUri>;
   };
 
   static fn(sequelize: Sequelize) {

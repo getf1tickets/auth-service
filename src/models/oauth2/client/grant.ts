@@ -1,6 +1,7 @@
 import {
   DataTypes, Model, Optional, Sequelize,
 } from 'sequelize';
+import { enumToArray } from '@getf1tickets/sdk';
 import { OAuth2Client } from '@/models/oauth2';
 
 export enum OAuth2ClientGrants {
@@ -39,7 +40,7 @@ export class OAuth2ClientGrant
           primaryKey: true,
         },
         type: {
-          type: DataTypes.STRING,
+          type: DataTypes.ENUM(...enumToArray(OAuth2ClientGrants, true)),
           allowNull: false,
         },
       },
