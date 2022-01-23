@@ -11,7 +11,7 @@
     "local:install-sdk": "yalc add @getf1tickets/sdk@1.0.0"
   },
   "dependencies": {
-    "@getf1tickets/sdk": "file:.yalc/@getf1tickets/sdk",
+    "@getf1tickets/sdk": "^1.0.0",
     "ajv-formats": "^2.1.1",
     "amqplib": "^0.8.0",
     "await-to-js": "^3.0.0",
