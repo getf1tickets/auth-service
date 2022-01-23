@@ -33,6 +33,6 @@ jobs:
         with:
           push: true
           context: .
-          tags: ghcr.io/getf1tickets/auth-server:latest
+          tags: ghcr.io/getf1tickets/auth-server:${{ github.sha }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
