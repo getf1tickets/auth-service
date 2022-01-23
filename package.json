@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@getf1tickets/sdk": "file:.yalc/@getf1tickets/sdk",
+    "ajv-formats": "^2.1.1",
+    "amqplib": "^0.8.0",
     "await-to-js": "^3.0.0",
     "bcrypt": "^5.0.1",
     "fastify": "^3.0.0",
