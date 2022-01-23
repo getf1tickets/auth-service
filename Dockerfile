@@ -3,6 +3,7 @@ FROM node:16-alpine AS build
 WORKDIR /usr/src/app
 
 COPY .npmrc-docker .npmrc
+RUN cat .npmrc
 COPY package*.json .
 RUN npm install
 
@@ -24,6 +25,7 @@ ENV AMQP_EXCHANGE_NAME=""
 WORKDIR /usr/app
 
 COPY .npmrc-docker .npmrc
+RUN cat .npmrc
 COPY package*.json .
 RUN npm install --production
 COPY --from=build /usr/src/app/dist dist
