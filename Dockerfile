@@ -27,7 +27,7 @@ WORKDIR /usr/app
 COPY .npmrc-docker .npmrc
 RUN cat .npmrc
 COPY package*.json .
-RUN npm install --production
+COPY --from=build /usr/src/app/node_modules node_modules
 COPY --from=build /usr/src/app/dist dist
 
 EXPOSE 3000
