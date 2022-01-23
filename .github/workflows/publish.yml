@@ -33,6 +33,6 @@ jobs:
         with:
           push: true
           context: .
-          tags: getf1tickets/auth-server:${{ github.sha }}
+          tags: getf1tickets/auth-server:latest
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
