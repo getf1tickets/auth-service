@@ -19,6 +19,13 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: generate-npmrc-docker
+        run: |
+          echo "always-auth=true" >> .npmrc-docker
+          echo "@getf1tickets:registry=https://npm.pkg.github.com/" >> .npmrc-docker
+          echo "//npm.pkg.github.com/:_authToken=${NPM_GITHUB_TOKEN}" > .npmrc-docker
+        env:
+          NPM_GITHUB_TOKEN: ${{ secrets.NPM_GITHUB_TOKEN }}}
       - name: Build and push the docker image
         id: docker_build
         uses: docker/build-push-action@v2
@@ -26,7 +33,5 @@ jobs:
           push: true
           context: .
           tags: ghcr.io/getf1tickets/auth-server:${{ github.sha }}
-          secrets: |
-            "NPM_GITHUB_TOKEN=${{ secrets.GH_PACKAGE_TOKEN }}"
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
