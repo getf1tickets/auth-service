@@ -1,29 +1,15 @@
 name: Build & push image to repository
 
 on:
-  create:
-    tags:
-      - v*
+  push:
+    branches:
+      - main
 
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 16
-      - run: npm install
-        env:
-          NPM_GITHUB_TOKEN: ${{ secrets.GH_PACKAGE_TOKEN }}
-      - run: npm run build
-        env:
-          NPM_GITHUB_TOKEN: ${{ secrets.GH_PACKAGE_TOKEN }}
-      - name: Get smart tag
-        id: prepare
-        uses: Surgo/docker-smart-tag-action@v1
-        with:
-          docker_image: getf1tickets/auth-service
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -34,11 +20,13 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push
+      - name: Build and push the docker image
         id: docker_build
         uses: docker/build-push-action@v2
+        env:
+          NPM_GITHUB_TOKEN: ${{ secrets.GH_PACKAGE_TOKEN }}
         with:
           push: true
-          tags: ${{ steps.prepare.outputs.tag }}
+          tags: ${{ github.sha }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
