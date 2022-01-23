@@ -1,3 +1,15 @@
+# Build stage
+FROM node:16-alpine AS build
+WORKDIR /usr/src/app
+
+COPY ./.npmrc .
+COPY package*.json .
+RUN npm install
+
+COPY . .
+RUN npm run build
+
+# Application stage
 FROM node:16-alpine
 
 LABEL MAINTAINER="iverly <contact@iverly.net>"
@@ -11,9 +23,10 @@ ENV AMQP_EXCHANGE_NAME=""
 
 WORKDIR /usr/app
 
-COPY package*.json ./
-COPY node_modules/ ./
-COPY dist/ ./
+COPY ./.npmrc .
+COPY package*.json .
+RUN npm install --production
+COPY --from=build /usr/src/app/dist dist
 
 EXPOSE 3000
 CMD ["npm", "start"]

@@ -10,14 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 16
-      - run: npm install
-        env:
-          NPM_GITHUB_TOKEN: ${{ secrets.GH_PACKAGE_TOKEN }}
-      - run: npm run build
-      - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -34,5 +26,7 @@ jobs:
           push: true
           context: .
           tags: ghcr.io/getf1tickets/auth-server:${{ github.sha }}
+          secrets: |
+            "NPM_GITHUB_TOKEN=${{ secrets.GH_PACKAGE_TOKEN }}"
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
