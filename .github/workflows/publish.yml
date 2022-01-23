@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: generate-npmrc-docker
+      - name: generate-npmrc
         run: |
-          echo "always-auth=true" >> .npmrc-docker
-          echo "@getf1tickets:registry=https://npm.pkg.github.com/" >> .npmrc-docker
-          echo "//npm.pkg.github.com/:_authToken=$NPM_GITHUB_TOKEN" >> .npmrc-docker
+          echo "always-auth=true" >> .npmrc
+          echo "@getf1tickets:registry=https://npm.pkg.github.com/" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=$NPM_GITHUB_TOKEN" >> .npmrc
         env:
           NPM_GITHUB_TOKEN: ${{ secrets.GH_PACKAGE_TOKEN }}
       - name: Build and push the docker image
@@ -23,7 +23,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          image: auth-server
+          image: auth-service
           tags: ${{ github.sha }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
