@@ -20,8 +20,6 @@ jobs:
       - name: Get smart tag
         id: prepare
         uses: Surgo/docker-smart-tag-action@v1
-        with:
-          docker_image: ghcr.io/getf1tickets/auth-service
       - name: Build and push the docker image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
