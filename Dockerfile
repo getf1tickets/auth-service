@@ -12,6 +12,7 @@ ENV AMQP_EXCHANGE_NAME=""
 WORKDIR /usr/app
 
 COPY package*.json ./
+COPY node_modules/ ./
 COPY dist/ ./
 
 EXPOSE 3000
