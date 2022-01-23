@@ -17,9 +17,9 @@ jobs:
           echo "//npm.pkg.github.com/:_authToken=$NPM_GITHUB_TOKEN" >> .npmrc
         env:
           NPM_GITHUB_TOKEN: ${{ secrets.GH_PACKAGE_TOKEN }}
-      - name: Get smart tag
-        id: prepare
-        uses: Surgo/docker-smart-tag-action@v1
+      - name: Get tag
+        id: docker-tag
+        uses: yuya-takeyama/docker-tag-from-github-ref-action@v1
       - name: Build and push the docker image
         uses: mr-smithers-excellent/docker-build-push@v5
         with:
@@ -27,6 +27,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           image: auth-service
-          tags: ${{ steps.prepare.outputs.tag }}
+          tags: ${{ steps.docker-tag.outputs.tag }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
