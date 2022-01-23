@@ -1,16 +1,4 @@
-# Build stage
-FROM node:16-alpine AS build
-WORKDIR /usr/src/app
-
-COPY package*.json .
-RUN npm install
-
-COPY . .
-RUN npm run build
-
-# Application stage
 FROM node:16-alpine
-WORKDIR /usr/src/app
 
 LABEL MAINTAINER="iverly <contact@iverly.net>"
 LABEL APP="f1tickets-auth-service"
@@ -21,10 +9,10 @@ ENV JWT_ISSUER=""
 ENV CLOUDAMQP_URL=""
 ENV AMQP_EXCHANGE_NAME=""
 
-COPY package*.json .
-RUN npm install --production
+WORKDIR /usr/app
 
-COPY --from=build /usr/src/app/dist dist
+COPY package*.json ./
+COPY dist/ ./
 
 EXPOSE 3000
 CMD ["npm", "start"]
