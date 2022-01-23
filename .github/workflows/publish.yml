@@ -23,9 +23,7 @@ jobs:
         run: |
           echo "always-auth=true" >> .npmrc-docker
           echo "@getf1tickets:registry=https://npm.pkg.github.com/" >> .npmrc-docker
-          echo "//npm.pkg.github.com/:_authToken=${NPM_GITHUB_TOKEN}" > .npmrc-docker
-        env:
-          NPM_GITHUB_TOKEN: ${{ secrets.NPM_GITHUB_TOKEN }}}
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_GITHUB_TOKEN }}}" > .npmrc-docker
       - name: Build and push the docker image
         id: docker_build
         uses: docker/build-push-action@v2
