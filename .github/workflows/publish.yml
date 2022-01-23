@@ -12,9 +12,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: generate-npmrc-docker
         run: |
-          'echo always-auth=true >> .npmrc-docker'
-          'echo @getf1tickets:registry=https://npm.pkg.github.com/ >> .npmrc-docker'
-          'echo //npm.pkg.github.com/:_authToken="$NPM_GITHUB_TOKEN" >> .npmrc-docker'
+          'echo "always-auth=true" >> .npmrc-docker'
+          'echo "@getf1tickets:registry=https://npm.pkg.github.com/" >> .npmrc-docker'
+          'echo "//npm.pkg.github.com/:_authToken=$NPM_GITHUB_TOKEN" >> .npmrc-docker'
         env:
           NPM_GITHUB_TOKEN: ${{ secrets.GH_PACKAGE_TOKEN }}
       - name: Build and push the docker image
