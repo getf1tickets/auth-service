@@ -94,3 +94,4 @@ dist
 .yalc/
 yalc.lock
 .env
+.npmrc

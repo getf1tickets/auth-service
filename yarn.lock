@@ -67,7 +67,7 @@
 
 "@babel/generator@^7.16.8":
   version "7.16.8"
-  resolved "https://registry.npmjs.org/@babel/generator/-/generator-7.16.8.tgz#359d44d966b8cd059d543250ce79596f792f2ebe"
+  resolved "https://registry.npmjs.org/@babel/generator/-/generator-7.16.8.tgz"
   integrity sha512-1ojZwE9+lOXzcWdWmO6TbUzDfqLD39CmEhN8+2cX9XkDo5yW1OpgfejfliysR2AWLpMamTiOiAp/mtroaymhpw==
   dependencies:
     "@babel/types" "^7.16.8"
@@ -191,7 +191,7 @@
 
 "@babel/parser@^7.16.10", "@babel/parser@^7.16.12":
   version "7.16.12"
-  resolved "https://registry.npmjs.org/@babel/parser/-/parser-7.16.12.tgz#9474794f9a650cf5e2f892444227f98e28cdf8b6"
+  resolved "https://registry.npmjs.org/@babel/parser/-/parser-7.16.12.tgz"
   integrity sha512-VfaV15po8RiZssrkPweyvbGVSe4x2y+aciFCgn0n0/SJMR22cwofRV1mtnJQYcSB1wUTaA/X1LnA3es66MCO5A==
 
 "@babel/parser@^7.16.7":
@@ -260,7 +260,7 @@
 
 "@babel/traverse@^7.16.10":
   version "7.16.10"
-  resolved "https://registry.npmjs.org/@babel/traverse/-/traverse-7.16.10.tgz#448f940defbe95b5a8029975b051f75993e8239f"
+  resolved "https://registry.npmjs.org/@babel/traverse/-/traverse-7.16.10.tgz"
   integrity sha512-yzuaYXoRJBGMlBhsMJoUW7G1UmSb/eXr/JHYM/MsOJgavJibLwASijW7oXBdw3NQ6T0bW7Ty5P/VarOs9cHmqw==
   dependencies:
     "@babel/code-frame" "^7.16.7"
@@ -300,7 +300,7 @@
 
 "@babel/types@^7.16.8":
   version "7.16.8"
-  resolved "https://registry.npmjs.org/@babel/types/-/types-7.16.8.tgz#0ba5da91dd71e0a4e7781a30f22770831062e3c1"
+  resolved "https://registry.npmjs.org/@babel/types/-/types-7.16.8.tgz"
   integrity sha512-smN2DQc5s4M7fntyjGtyIPbRJv6wW4rU/94fmYJ7PKQuZkC0qGMHXJbg6sNGt12JmVr4k5YaptI/XtiLJBnmIg==
   dependencies:
     "@babel/helper-validator-identifier" "^7.16.7"
@@ -340,10 +340,10 @@
   dependencies:
     ajv "^6.12.6"
 
-"@getf1tickets/sdk@^1.0.0":
-  version "1.0.0"
-  resolved "https://npm.pkg.github.com/download/@getf1tickets/sdk/1.0.0/4c21fad04e541c1ce4db49a24c58e697526a6c4a9b9bf6e0ddaf48f1ffff7ce9#1c7975c1f1ad38b745409fceb5cb8db3e145ec0e"
-  integrity sha512-bZ0E9IIda8XeGe9GxYxPb31Rco4eA/Mk1QQBQjxv40puLQZIS67/HLQFrscUzTxus/6xlORgrUFD8XCFpCguWg==
+"@getf1tickets/sdk@^1.0.1":
+  version "1.0.1"
+  resolved "https://npm.pkg.github.com/download/@getf1tickets/sdk/1.0.1/df122f69118eadb1f91916ab8f97a90adb14f0efc50629d40fbee8dc7c1aaf17"
+  integrity sha512-bpntWjuJdPTkbtTbTCOpEXyolKnxy4oACcpjR9+aGFLo8fWvrAg78TqSi7wNiSC62a46AyQs2MLuQixEgIj3hw==
   dependencies:
     ajv "^8.8.2"
     ajv-errors "^3.0.0"
@@ -3823,9 +3823,9 @@ quick-format-unescaped@^4.0.3:
   integrity sha512-tYC1Q1hgyRuHgloV/YXs2w15unPVh8qfu/qCTfhTYamaw7fyhumKa2yGpdSo87vY32rIclj+4fWYQXUMs9EHvg==
 
 react-devtools-core@^4.19.1:
-  version "4.22.1"
-  resolved "https://registry.npmjs.org/react-devtools-core/-/react-devtools-core-4.22.1.tgz#b276d42f860bedc373c9b3c0f5f96734318dd453"
-  integrity sha512-pvpNDHE7p0FtcCmIWGazoY8LLVfBI9sw0Kf10kdHhPI9Tzt3OG/qEt16GrAbE0keuna5WzX3r1qPKVjqOqsuUg==
+  version "4.23.0"
+  resolved "https://registry.npmjs.org/react-devtools-core/-/react-devtools-core-4.23.0.tgz#dff9d12202a472ef62632203d6de3877dc6e58be"
+  integrity sha512-KkzneT1LczFtebbTJlvRphIRvzuHLhI9ghfrseVv9ktBs+l2cXy8Svw5U16lzQnwU9okVEcURmGPgH79WWrlaw==
   dependencies:
     shell-quote "^1.6.1"
     ws "^7"
