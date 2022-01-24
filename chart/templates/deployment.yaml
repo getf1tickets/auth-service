@@ -33,17 +33,43 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: "DATABASE_URL"
+              valueFrom:
+                secretKeyRef:
+                  key: databaseUrl
+                  name: {{ .Release.Name }}-env
+            - name: "JWT_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  key: jwtSecret
+                  name: {{ .Release.Name }}-env
+            - name: "JWT_ISSUER"
+              valueFrom:
+                secretKeyRef:
+                  key: jwtIssuer
+                  name: {{ .Release.Name }}-env
+            - name: "CLOUDAMQP_URL"
+              valueFrom:
+                secretKeyRef:
+                  key: cloudamqpUrl
+                  name: {{ .Release.Name }}-env
+            - name: "AMQP_EXCHANGE_NAME"
+              valueFrom:
+                secretKeyRef:
+                  key: cloudamqpExchangeName
+                  name: {{ .Release.Name }}-env
           ports:
             - name: http
               containerPort: 3000
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /health
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /health
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

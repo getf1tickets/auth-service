@@ -46,11 +46,11 @@ ingress:
   className: ""
   annotations:
     kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
   hosts:
     - host: api.getf1tickets.com
       paths:
-        - path: /auth
+        - path: /auth(/|$)(.*)
           pathType: ImplementationSpecific
   tls: []
   #  - secretName: chart-example-tls
@@ -81,3 +81,5 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+env: {}
