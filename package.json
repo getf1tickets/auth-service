@@ -1,6 +1,6 @@
 {
   "name": "auth-service",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "This project was bootstrapped with Fastify-CLI.",
   "main": "app.ts",
   "scripts": {
@@ -11,7 +11,7 @@
     "local:install-sdk": "yalc add @getf1tickets/sdk@1.0.0"
   },
   "dependencies": {
-    "@getf1tickets/sdk": "^1.0.2",
+    "@getf1tickets/sdk": "^1.0.4",
     "ajv-formats": "^2.1.1",
     "amqplib": "^0.8.0",
     "await-to-js": "^3.0.0",
