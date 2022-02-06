@@ -10,8 +10,8 @@ Authentification service for getf1tickets
 Make sure you have Node >12.X installed, yarn and yalc is installed globally.
 
 ```bash
-git clone https://github.com/getf1tickets/url
-cd url
+git clone https://github.com/getf1tickets/auth-service
+cd auth-service
 yarn run local:install-sdk
 yarn
 ```
